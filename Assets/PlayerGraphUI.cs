@@ -40,7 +40,15 @@ public class PlayerGraphUI : MonoBehaviour
         if (bar != null)
         {
             Vector2 vec = bar.sizeDelta;
-            vec.x = _maxSize * value;
+            if (Mathf.Approximately(PlayerBehaviour.maxFactorValue, 0f))
+            {
+                vec.x = 0f;
+            }
+            else
+            {
+
+                vec.x = _maxSize * (Mathf.Clamp(value, 0f, PlayerBehaviour.maxFactorValue)/PlayerBehaviour.maxFactorValue);
+            }
             bar.sizeDelta = Vector2.Lerp(bar.sizeDelta, vec, LerpScale);
         }
     }
