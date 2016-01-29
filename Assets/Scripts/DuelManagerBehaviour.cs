@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum DuelStates
 {
@@ -21,6 +22,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     protected float walkTimer, turnTimer;
     protected DuelStates nextState;
 
+    protected List<WalkEvent> walkEventsP1, walkEventsP2;
+
     [SerializeField]
     protected float walkTime = 10f;
     [SerializeField]
@@ -36,6 +39,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     public float WalkFraction
     {
         get { return walkTimer; }
+    }
+
+    public override void Awake()
+    {
+        base.Awake();
+
+        walkEventsP1 = new List<WalkEvent>();
+        walkEventsP2 = new List<WalkEvent>();
     }
 
 	// Use this for initialization
@@ -120,12 +131,25 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (newState == DuelStates.start)
         {
             Debug.Log("START");
+            walkEventsP1.Clear();
+            walkEventsP2.Clear();
         }
 
         //Ready setup
         if (newState == DuelStates.ready)
         {
             Debug.Log("Are you ready to duel?");
+
+            //Populate the walk events...
+            for (int i = 0; i < 10; i++)
+            {
+                //Just with footsteps for now
+                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 2f));
+                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 2f));
+            }
+
+            walkEventsP1.Sort();
+            walkEventsP2.Sort();
         }
 
         //Walk setup
