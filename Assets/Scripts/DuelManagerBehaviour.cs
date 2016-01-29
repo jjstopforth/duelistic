@@ -41,7 +41,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 	// Use this for initialization
 	public void Start()
     {
-        currentState = DuelStates.start;
+        currentState = DuelStates.none;
+        ChangeStateTo(DuelStates.start);
         nextState = DuelStates.none;
         DontDestroyOnLoad(this.gameObject);
         walkTimer = 0f;
