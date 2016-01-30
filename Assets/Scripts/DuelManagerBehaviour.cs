@@ -19,7 +19,7 @@ public enum DuelStates
 public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 {
     protected DuelStates currentState;
-    protected float walkTimer, turnTimer;
+    protected float walkTimer, prevWalkTimer, turnTimer;
     protected DuelStates nextState;
 
     protected List<WalkEvent> walkEventsP1, walkEventsP2;
@@ -40,6 +40,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     [SerializeField]
     protected float mashThreshold = 0.2f;
     protected float keyDownP1, keyDownP2, keyUpP1, keyUpP2;
+
+    //Animations?
+    [Header("Animations...")]
+    public GameObject footstepAnim = null;
 
     public DuelStates State
     {
@@ -89,18 +93,96 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         //State specific updates
         switch (currentState)
         {
+            case DuelStates.ready: ReadyUpdate(); break;
             case DuelStates.walk: WalkUpdate(); break;
             case DuelStates.turn: TurnUpdate(); break;
         }
 	}
 
+    protected void ReadyUpdate()
+    {
+        //both players have to hit their keys at the same time...
+        if (keyUpP1 >= 0f) keyUpP1 += Time.deltaTime;
+        if (keyUpP2 >= 0f) keyUpP2 += Time.deltaTime;
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            keyUpP1 = 0f;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            keyUpP2 = 0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            keyUpP1 = -1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            keyUpP2 = -1f;
+        }
+
+        if (((keyUpP1 == 0f) && (keyUpP2 < mashThreshold)) || ((keyUpP2 == 0f) && (keyUpP1 < mashThreshold)))
+        {
+            ChangeStateNextFrame(DuelStates.walk);
+        }
+    }
+
     protected void WalkUpdate()
     {
+        prevWalkTimer = walkTimer;
         walkTimer += Time.deltaTime / walkTime;
+
+        //Check for active events...
+        foreach (WalkEvent w in walkEventsP1)
+        {
+            if (w.Start <= walkTimer)
+            {
+                if (w.Start > prevWalkTimer)
+                {
+                    //First frame this has been live in, trigger it!
+                    w.StartEvent(player1);
+                }
+
+                if (w.Start + w.Duration > walkTimer)
+                {
+                    w.UpdateEvent(player1);
+                }
+                else if (w.Start + w.Duration > prevWalkTimer)
+                {
+                    w.EndEvent(player1);
+                }
+            }
+        }
+        foreach (WalkEvent w in walkEventsP2)
+        {
+            if (w.Start <= walkTimer)
+            {
+                if (w.Start > prevWalkTimer)
+                {
+                    //First frame this has been live in, trigger it!
+                    w.StartEvent(player2);
+                }
+
+                if (w.Start + w.Duration > walkTimer)
+                {
+                    w.UpdateEvent(player2);
+                }
+                else if (w.Start + w.Duration > prevWalkTimer)
+                {
+                    w.EndEvent(player2);
+                }
+            }
+        }
+
+        //Move on to next state...
         if (walkTimer >= 1f)
         {
             ChangeStateNextFrame(DuelStates.turn);
-            return;
+            //return;
         }
 
         //Check player inputs:
@@ -111,7 +193,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (keyDownP1 >= holdThreshold) PlayerHolding(player1);
         if (keyDownP2 >= holdThreshold) PlayerHolding(player2);
 
-        //Player 1
+        //Player 1 input
         if (Input.GetKeyDown(KeyCode.A))
         {
             keyDownP1 = 0f;
@@ -126,7 +208,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyUpP1 = 0f;
             keyDownP1 = -1f;
         }
-        //Player 2
+
+        //Player 2 input
         if (Input.GetKeyDown(KeyCode.L))
         {
             keyDownP2 = 0f;
@@ -142,7 +225,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyDownP2 = -1f;
         }
 
-        Debug.Log("Walk time so far: " + walkTimer.ToString());
+        //Debug.Log("Walk time so far: " + walkTimer.ToString());
     }
 
     public void PlayerHolding(PlayerBehaviour _player)
@@ -202,7 +285,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             return;
         }
 
-        Debug.Log("Turning... " + turnDelay.ToString());
+        //Debug.Log("Turning... " + turnDelay.ToString());
     }
 
     protected void KeyPressed()
@@ -210,7 +293,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         switch (currentState)
         {
             case DuelStates.start: ChangeStateTo(DuelStates.ready); break;
-            case DuelStates.ready: ChangeStateTo(DuelStates.walk); break;
+            //case DuelStates.ready: ChangeStateTo(DuelStates.walk); break;
             case DuelStates.tie:
             case DuelStates.p1win:
             case DuelStates.p2win: ChangeStateTo(DuelStates.start); break;
@@ -229,10 +312,18 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("START");
 
+            walkTimer = 0f;
+
             walkEventsP1.Clear();
             walkEventsP2.Clear();
             player1.ResetStats();
             player2.ResetStats();
+
+            if (Camera.main != null)
+            {
+                ZoomController zoomController = Camera.main.GetComponent<ZoomController>();
+                zoomController.ResetCamera();
+            }
         }
 
         //Ready setup
@@ -244,8 +335,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             for (int i = 0; i < 10; i++)
             {
                 //Just with footsteps for now
-                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 10f));
-                walkEventsP2.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 10f));
+                walkEventsP1.Add(new WalkFootstepEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f));
+                walkEventsP2.Add(new WalkFootstepEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f));
             }
             WalkEvent w = new WalkEvent(0f, 1f, WalkEventTypes.hatTwirl);
             w.SetHoldFactors(0, 2, 2f);
@@ -277,6 +368,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyDownP2 = -1f;
             keyUpP1 = -1f;
             keyUpP2 = -1f;
+
+            Debug.Log("Duelling! (banjos)");
         }
 
         //Turn setup

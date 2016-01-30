@@ -92,6 +92,11 @@ public class PlayerBehaviour : MonoBehaviour {
         manners = 0f;
         breeding = 0f;
         bottle = 0f;
+
+        this.GetComponentInParent<SpriteRenderer>().flipX = (transform.position.x < 0f);
+        Vector3 startPos = transform.position;
+        startPos.x = _startPosition;
+        transform.position = startPos;
     }
 
     /// <summary>
