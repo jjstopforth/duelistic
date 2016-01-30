@@ -147,6 +147,17 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 
     public void PlayerHolding(PlayerBehaviour _player)
     {
+        List<WalkEvent> events = walkEventsP1;
+        if (_player == player2) events = walkEventsP2;
+
+        foreach (WalkEvent w in events)
+        {
+            if ((w.Start <= WalkFraction) && (w.Start + w.Duration >= WalkFraction))
+            {
+                w.Hold(_player);
+            }
+        }
+
         Debug.Log("Holding!");
     }
 
@@ -168,12 +179,6 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 
     public void PlayerMash(PlayerBehaviour _player)
     {
-        /*_player.gumption += Random.Range(-2f, 5f);
-        _player.manners += Random.Range(-2f, 5f);
-        _player.breeding += Random.Range(-2f, 5f);
-        _player.bottle += Random.Range(-2f, 5f);
-        /**/
-
         List<WalkEvent> events = walkEventsP1;
         if (_player == player2) events = walkEventsP2;
 
@@ -243,11 +248,19 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
                 walkEventsP2.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 10f));
             }
             WalkEvent w = new WalkEvent(0f, 1f, WalkEventTypes.hatTwirl);
-            w.SetMashFactors(0, 2, 2f);
+            w.SetHoldFactors(0, 2, 2f);
             walkEventsP1.Add(w);
 
             w = new WalkEvent(0f, 1f, WalkEventTypes.hatTwirl);
-            w.SetMashFactors(0, 3, 3f);
+            w.SetHoldFactors(0, 3, 3f);
+            walkEventsP2.Add(w);
+
+            w = new WalkEvent(0f, 1f, WalkEventTypes.owlSalute);
+            w.SetMashFactors(Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f));
+            walkEventsP1.Add(w);
+
+            w = new WalkEvent(0f, 1f, WalkEventTypes.owlSalute);
+            w.SetMashFactors(Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f));
             walkEventsP2.Add(w);
 
             walkEventsP1.Sort();

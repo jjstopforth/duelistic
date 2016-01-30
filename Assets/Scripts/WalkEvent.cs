@@ -17,8 +17,9 @@ public class WalkEvent : IComparable
 {
     protected float start, duration;
     protected float gumptionTapDelta, mannersTapDelta, breedingTapDelta, bottleTapDelta;
-    protected int mashFrom, mashTo;
-    protected float mashRate;
+    protected int holdFrom, holdTo;
+    protected float holdRate;
+    protected float gumptionMashDelta, mannersMashDelta, breedingMashDelta, bottleMashDelta;
     protected WalkEventTypes walkEvent;
     protected bool tapped;
 
@@ -47,9 +48,14 @@ public class WalkEvent : IComparable
         breedingTapDelta = _breedingDelta;
         bottleTapDelta = _bottleDelta;
 
-        mashFrom = 0;
-        mashTo = 0;
-        mashRate = 0f;
+        holdFrom = 0;
+        holdTo = 0;
+        holdRate = 0f;
+
+        gumptionMashDelta = 0f;
+        mannersMashDelta = 0f;
+        breedingMashDelta = 0f;
+        bottleMashDelta = 0f;
 
         tapped = false;
     }
@@ -62,11 +68,19 @@ public class WalkEvent : IComparable
         bottleTapDelta = _bottleDelta;
     }
 
-    public void SetMashFactors(int _mashFrom, int _mashTo, float _mashRate)
+    public void SetHoldFactors(int _mashFrom, int _mashTo, float _mashRate)
     {
-        mashFrom = _mashFrom;
-        mashTo = _mashTo;
-        mashRate = _mashRate;
+        holdFrom = _mashFrom;
+        holdTo = _mashTo;
+        holdRate = _mashRate;
+    }
+
+    public void SetMashFactors(float _gumptionDelta, float _mannersDelta, float _breedingDelta, float _bottleDelta)
+    {
+        gumptionMashDelta = _gumptionDelta;
+        mannersMashDelta = _mannersDelta;
+        breedingMashDelta = _breedingDelta;
+        bottleMashDelta = _bottleDelta;
     }
 
     public void Tap(PlayerBehaviour _player)
@@ -81,31 +95,31 @@ public class WalkEvent : IComparable
         tapped = true;
     }
 
-    public void Mash(PlayerBehaviour _player)
+    public void Hold(PlayerBehaviour _player)
     {
         float mashAmount = 0f;
 
-        switch (mashFrom) //where does the amount come from?
+        switch (holdFrom) //where does the amount come from?
         {
             case 0:
-                mashAmount = Mathf.Min(_player.gumption, mashRate);
+                mashAmount = Mathf.Min(_player.gumption, holdRate);
                 _player.gumption -= mashAmount;
                 break;
             case 1:
-                mashAmount = Mathf.Min(_player.manners, mashRate);
+                mashAmount = Mathf.Min(_player.manners, holdRate);
                 _player.manners -= mashAmount;
                 break;
             case 2:
-                mashAmount = Mathf.Min(_player.breeding, mashRate);
+                mashAmount = Mathf.Min(_player.breeding, holdRate);
                 _player.breeding -= mashAmount;
                 break;
             case 3:
-                mashAmount = Mathf.Min(_player.bottle, mashRate);
+                mashAmount = Mathf.Min(_player.bottle, holdRate);
                 _player.bottle -= mashAmount;
                 break;
         }
 
-        switch (mashTo) //where does the amount go to?
+        switch (holdTo) //where does the amount go to?
         {
             case 0:
                 _player.gumption += mashAmount;
@@ -120,6 +134,14 @@ public class WalkEvent : IComparable
                 _player.bottle += mashAmount;
                 break;
         }
+    }
+
+    public void Mash(PlayerBehaviour _player)
+    {
+        _player.gumption += gumptionMashDelta;
+        _player.manners += mannersMashDelta;
+        _player.breeding += breedingMashDelta;
+        _player.bottle += bottleMashDelta;
     }
 
     public int CompareTo(object _o)
