@@ -65,4 +65,9 @@ public class ZoomController : MonoBehaviour {
 		}
 	}
 
+    public void ResetCamera()
+    {
+        _fired = false;
+        GetComponent<Camera>().orthographicSize = MinZoomSize;
+    }
 }

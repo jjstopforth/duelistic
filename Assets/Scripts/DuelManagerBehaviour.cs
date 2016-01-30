@@ -89,10 +89,43 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         //State specific updates
         switch (currentState)
         {
+            case DuelStates.ready: ReadyUpdate(); break;
             case DuelStates.walk: WalkUpdate(); break;
             case DuelStates.turn: TurnUpdate(); break;
         }
 	}
+
+    protected void ReadyUpdate()
+    {
+        //both players have to hit their keys at the same time...
+        if (keyUpP1 >= 0f) keyUpP1 += Time.deltaTime;
+        if (keyUpP2 >= 0f) keyUpP2 += Time.deltaTime;
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            keyUpP1 = 0f;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            keyUpP2 = 0f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            keyUpP1 = -1f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            keyUpP2 = -1f;
+        }
+
+        if (((keyUpP1 == 0f) && (keyUpP2 < mashThreshold)) || ((keyUpP2 == 0f) && (keyUpP1 < mashThreshold)))
+        {
+            ChangeStateNextFrame(DuelStates.walk);
+        }
+    }
 
     protected void WalkUpdate()
     {
@@ -210,7 +243,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         switch (currentState)
         {
             case DuelStates.start: ChangeStateTo(DuelStates.ready); break;
-            case DuelStates.ready: ChangeStateTo(DuelStates.walk); break;
+            //case DuelStates.ready: ChangeStateTo(DuelStates.walk); break;
             case DuelStates.tie:
             case DuelStates.p1win:
             case DuelStates.p2win: ChangeStateTo(DuelStates.start); break;
@@ -229,10 +262,18 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("START");
 
+            walkTimer = 0f;
+
             walkEventsP1.Clear();
             walkEventsP2.Clear();
             player1.ResetStats();
             player2.ResetStats();
+
+            if (Camera.main != null)
+            {
+                ZoomController zoomController = Camera.main.GetComponent<ZoomController>();
+                zoomController.ResetCamera();
+            }
         }
 
         //Ready setup
@@ -277,6 +318,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyDownP2 = -1f;
             keyUpP1 = -1f;
             keyUpP2 = -1f;
+
+            Debug.Log("Duelling! (banjos)");
         }
 
         //Turn setup
