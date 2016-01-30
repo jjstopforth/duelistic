@@ -11,7 +11,7 @@ public class RabbitEvent : WalkEvent
         : base(_start, _duration, WalkEventTypes.wind)
     {
         SetMashFactors(Random.Range(3f, 5f), Random.Range(3f, 5f), Random.Range(3f, 5f), Random.Range(3f, 5f));
-        float negativeMash = Random.Range(-4f, -3f);
+        float negativeMash = Random.Range(-3f, -2f);
 
         switch (Mathf.RoundToInt(Random.Range(0.5f, 4.499f)))
         {

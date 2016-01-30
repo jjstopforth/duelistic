@@ -85,10 +85,10 @@ public class WalkEvent : IComparable
         bottleTapDelta = _bottleDelta;
     }
 
-    public void SetHoldFactors(int _mashFrom, int _mashTo, float _mashRate)
+    public void SetHoldFactors(int _holdFrom, int _holdTo, float _mashRate)
     {
-        holdFrom = _mashFrom;
-        holdTo = _mashTo;
+        holdFrom = _holdFrom;
+        holdTo = _holdTo;
         holdRate = _mashRate;
     }
 
