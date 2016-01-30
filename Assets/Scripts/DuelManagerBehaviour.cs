@@ -25,6 +25,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     protected List<WalkEvent> walkEventsP1, walkEventsP2;
 
     [SerializeField]
+    protected PlayerBehaviour player1, player2;
+    [SerializeField]
     protected float walkTime = 10f;
     [SerializeField]
     protected float turnDelay = 3f;
