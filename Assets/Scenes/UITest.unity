@@ -302,30 +302,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 11469526, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: FadeColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11469526, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: FadeColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11469526, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: FadeColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 10251064, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: m_Color.rgba
-      value: 4278245631
-      objectReference: {fileID: 0}
-    - target: {fileID: 11469526, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: FadeTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 11469526, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
-      propertyPath: FloatingTime
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
   m_IsPrefabParent: 0

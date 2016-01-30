@@ -94,6 +94,9 @@ MonoBehaviour:
   DeltaPos: {x: 0, y: 3, z: 0}
   DeltaScale: {x: 2, y: 2, z: 2}
   FadeColor: {r: 1, g: 0, b: 0, a: 0}
+  ColorEasingType: 35
+  PosEasingType: 35
+  ScaleEasingType: 35
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

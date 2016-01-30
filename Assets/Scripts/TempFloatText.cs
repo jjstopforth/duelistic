@@ -13,6 +13,10 @@ public class TempFloatText : MonoBehaviour {
     private TextMesh textMesh;
     public Color FadeColor;
     Color _originialColor;
+    public EasingType ColorEasingType;
+    public EasingType PosEasingType;
+    public EasingType ScaleEasingType;
+
     void Awake()
     {
         _originalPos = gameObject.transform.position;
@@ -69,19 +73,20 @@ public class TempFloatText : MonoBehaviour {
             deltaTime += Time.deltaTime;
         }
         SetAlpha(FadeColor, 1f);
+        Destroy(gameObject);
     }
     void SetAlpha(Color color, float t)
     {
-        textMesh.color = Color.Lerp(color, FadeColor, t);
+        textMesh.color = Easing.Ease(color, FadeColor, t, ColorEasingType);
     }
     void SetHeight(Vector3 originalPos, float t)
     {
-        Vector3 pos = Vector3.Lerp(originalPos, _originalPos + DeltaPos, t);
+        Vector3 pos = Easing.Ease(originalPos, _originalPos + DeltaPos, t, PosEasingType);
         gameObject.transform.position = pos;
     }
     void SetScale(Vector3 originalScale, float t)
     {
-        Vector3 scale = Vector3.Lerp(originalScale, _originalScale + DeltaScale, t);
+        Vector3 scale = Easing.Ease(originalScale, _originalScale + DeltaScale, t, ScaleEasingType);
         gameObject.transform.localScale = scale;
     }
 }
