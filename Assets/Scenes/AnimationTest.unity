@@ -515,6 +515,10 @@ MonoBehaviour:
   holdThreshold: 0.15
   mashThreshold: 0.2
   footstepAnim: {fileID: 0}
+  windAnim: {fileID: 0}
+  rabbitAnim: {fileID: 0}
+  hatAnim: {fileID: 0}
+  handAnim: {fileID: 0}
 --- !u!4 &1775240039
 Transform:
   m_ObjectHideFlags: 0
