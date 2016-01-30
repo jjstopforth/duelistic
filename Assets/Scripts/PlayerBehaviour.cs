@@ -10,6 +10,8 @@ public class PlayerBehaviour : MonoBehaviour {
 	Animator _playerAnimator;
 	string[] _animationBools = {"isReady","isWalking", "isTurning", "isShooting", "isWinner"};
 
+	bool _hasFlipped = false;
+
     //The pseudo factors:
     public float gumption, manners, breeding, bottle = 0f;
     public static float maxFactorValue = 100;
@@ -43,34 +45,37 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (_playerAnimator == null) 
-		{
+		if (_playerAnimator == null) {
 
 			return;
 			
 		}
 
-		switch (DuelManagerBehaviour.Instance.State)
-		{
-			case DuelStates.none:
-				break;
-			case DuelStates.pistolSelection:
-				break;
-			case DuelStates.ready:
-				break;
-			case DuelStates.walk:
-				ResetAnimationBools();
-				_playerAnimator.SetBool("isWalking", true);
-				UpdatePosition();
-				break;
-			case DuelStates.turn:
+		switch (DuelManagerBehaviour.Instance.State) {
+		case DuelStates.none:
+			break;
+		case DuelStates.pistolSelection:
+			break;
+		case DuelStates.ready:
+			break;
+		case DuelStates.walk:
+			ResetAnimationBools ();
+			_playerAnimator.SetBool ("isWalking", true);
+			UpdatePosition ();
+			break;
+		case DuelStates.turn:
+			if (!_hasFlipped) 
+			{
+				this.GetComponentInParent<SpriteRenderer>().flipX = !this.GetComponentInParent<SpriteRenderer>().flipX;
+				_hasFlipped = true;
+
+			}
 				ResetAnimationBools();
 				_playerAnimator.SetBool("isTurning",true);
 				break;
 			case DuelStates.shoot:
 				ResetAnimationBools();
 				_playerAnimator.SetBool("isShooting",true);
-                this.GetComponentInParent<SpriteRenderer>().flipX = !this.GetComponentInParent<SpriteRenderer>().flipX;
 				break;
 			default:
 				break;
