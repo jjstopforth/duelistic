@@ -38,28 +38,29 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
     {
+    	Animator _playerAnimator = this.GetComponentInParent<Animator>();
 
 		switch (DuelManagerBehaviour.Instance.State)
 		{
 			case DuelStates.none:
 				break;
 			case DuelStates.pistolSelection:
-				//Debug.Log("Pistol selection taking place");
 				break;
 			case DuelStates.ready:
-				//Debug.Log("Working up the courage.");
 				break;
 			case DuelStates.walk:
-				Debug.Log("Walking");
+				_playerAnimator.ResetTrigger("Shoot"); // Might be able to remove later on or reset all after win/loss/tie.
+				_playerAnimator.SetTrigger("Walk");
 				UpdatePosition();
 				break;
 			case DuelStates.turn:
-				//Debug.Log("Turning slowly");
+				_playerAnimator.ResetTrigger("Walk");
+				_playerAnimator.SetTrigger("Turn");
 				break;
 			case DuelStates.shoot:
-				//Debug.Log("Pew pew!");
+				_playerAnimator.ResetTrigger("Turn");
+				_playerAnimator.SetTrigger("Shoot");
 				break;
-
 			default:
 				break;
 		
