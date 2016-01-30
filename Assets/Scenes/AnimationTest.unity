@@ -135,7 +135,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0.019607844}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_SortingLayerID: 1156557263
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5b7dd0681bba84f088147cba01b31e93, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.291}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!4 &617190169
@@ -514,6 +514,7 @@ MonoBehaviour:
   turnVariance: 0.5
   holdThreshold: 0.15
   mashThreshold: 0.2
+  footstepAnim: {fileID: 0}
 --- !u!4 &1775240039
 Transform:
   m_ObjectHideFlags: 0
