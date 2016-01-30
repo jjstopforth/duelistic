@@ -128,4 +128,9 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	}
 
+    public void SetAnimationBool(string _boolName, bool _value, bool _resetOtherBools = true)
+    {
+        if (_resetOtherBools) ResetAnimationBools();
+        _playerAnimator.SetBool(_boolName, _value);
+    }
 }
