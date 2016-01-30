@@ -76,11 +76,29 @@ public class PlayerBehaviour : MonoBehaviour {
 				break;
 		
 		}
-
-
 	}
 
+    /// <summary>
+    /// Resets stats to 0
+    /// </summary>
+    public void ResetStats()
+    {
+        gumption = 0f;
+        manners = 0f;
+        breeding = 0f;
+        bottle = 0f;
+    }
 
+    /// <summary>
+    /// Makes sure stats are within sane 0-maxFactorValue bounds
+    /// </summary>
+    public void SanitiseStats()
+    {
+        gumption = Mathf.Min(Mathf.Max(gumption, 0f), maxFactorValue);
+        manners = Mathf.Min(Mathf.Max(manners, 0f), maxFactorValue);
+        breeding = Mathf.Min(Mathf.Max(breeding, 0f), maxFactorValue);
+        bottle = Mathf.Min(Mathf.Max(bottle, 0f), maxFactorValue);
+    }
 
 	private void UpdatePosition ()
 	{
