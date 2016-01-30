@@ -44,6 +44,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     //Animations?
     [Header("Animations...")]
     public GameObject footstepAnim = null;
+    public GameObject windAnim = null;
+    public GameObject rabbitAnim = null;
+    public GameObject hatAnim = null;
+    public GameObject handAnim = null;
 
     public DuelStates State
     {
@@ -408,12 +412,16 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         //Player 1 win setup
         if (newState == DuelStates.p1win)
         {
+            player1.SetAnimationBool("isWinner", true);
+            player2.SetAnimationBool("isWinner", false);
             Debug.Log("Player 1 is satisfied!");
         }
 
         //Player 2 win setup
         if (newState == DuelStates.p2win)
         {
+            player2.SetAnimationBool("isWinner", true);
+            player1.SetAnimationBool("isWinner", false);
             Debug.Log("Player 2 is satisfied!");
         }
 
