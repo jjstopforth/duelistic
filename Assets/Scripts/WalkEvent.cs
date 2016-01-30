@@ -17,6 +17,7 @@ public class WalkEvent : IComparable
 {
     protected float start, duration, gumptionDelta, mannersDelta, breedingDelta, bottleDelta;
     protected WalkEventTypes walkEvent;
+    protected bool tapped;
 
     public WalkEventTypes MyEvent
     {
@@ -42,6 +43,8 @@ public class WalkEvent : IComparable
         mannersDelta = _mannersDelta;
         breedingDelta = _breedingDelta;
         bottleDelta = _bottleDelta;
+
+        tapped = false;
     }
 
     public void SetFactors(float _gumptionDelta, float _mannersDelta, float _breedingDelta, float _bottleDelta)
@@ -50,6 +53,18 @@ public class WalkEvent : IComparable
         mannersDelta = _mannersDelta;
         breedingDelta = _breedingDelta;
         bottleDelta = _bottleDelta;
+    }
+
+    public void Tap(PlayerBehaviour _player)
+    {
+        if (tapped) return;
+
+        _player.gumption += gumptionDelta;
+        _player.manners += mannersDelta;
+        _player.breeding += breedingDelta;
+        _player.bottle += bottleDelta;
+
+        tapped = true;
     }
 
     public int CompareTo(object _o)

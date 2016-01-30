@@ -33,6 +33,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     [SerializeField]
     protected float turnVariance = 0.5f;
 
+    //Input variables
+    [Header("Input variables")]
+    [SerializeField]
+    protected float holdThreshold = 0.15f;
+    [SerializeField]
+    protected float mashThreshold = 0.2f;
+    protected float keyDownP1, keyDownP2, keyUpP1, keyUpP2;
+
     public DuelStates State
     {
         get { return currentState; }
@@ -95,7 +103,59 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             return;
         }
 
-        Debug.Log("Walk time so far: " + walkTimer.ToString());
+        //Check player inputs:
+        if (keyDownP1 >= 0f) keyDownP1 += Time.deltaTime;
+        if (keyDownP2 >= 0f) keyDownP2 += Time.deltaTime;
+        if (keyUpP1 >= 0f) keyUpP1 += Time.deltaTime;
+        if (keyUpP2 >= 0f) keyUpP2 += Time.deltaTime;
+        if (keyDownP1 >= holdThreshold) PlayerHolding(player1);
+        if (keyDownP2 >= holdThreshold) PlayerHolding(player2);
+
+        //Player 1
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            keyDownP1 = 0f;
+            //keyUpP1 = -1f;
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            if ((keyDownP1 >= 0f) && (keyDownP1 < holdThreshold))
+            {
+                if ((keyUpP1 > 0f) && (keyUpP1 < mashThreshold)) PlayerMash(player1);
+                else PlayerTap(player1);
+            }
+            keyUpP1 = 0f;
+            keyDownP1 = -1f;
+        }
+        //Player 2
+
+        //Debug.Log("Walk time so far: " + walkTimer.ToString());
+    }
+
+    public void PlayerHolding(PlayerBehaviour _player)
+    {
+        Debug.Log("Holding!");
+    }
+
+    public void PlayerTap(PlayerBehaviour _player)
+    {
+        List<WalkEvent> events = walkEventsP1;
+        if (_player == player2) events = walkEventsP2;
+
+        foreach (WalkEvent w in events)
+        {
+            if ((w.Start <= WalkFraction) && (w.Start + w.Duration >= WalkFraction))
+            {
+                w.Tap(_player);
+            }
+        }
+
+        Debug.Log("Tapping!");
+    }
+
+    public void PlayerMash(PlayerBehaviour _player)
+    {
+        Debug.Log("Mashing!");
     }
 
     protected void TurnUpdate()
@@ -146,8 +206,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             for (int i = 0; i < 10; i++)
             {
                 //Just with footsteps for now
-                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 2f));
-                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 2f));
+                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 10f));
+                walkEventsP1.Add(new WalkEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f, WalkEventTypes.footStep, 10f));
             }
 
             walkEventsP1.Sort();
@@ -158,6 +218,12 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (newState == DuelStates.walk)
         {
             walkTimer = 0f;
+
+            //Reset keyboard inputs:
+            keyDownP1 = -1f;
+            keyDownP2 = -1f;
+            keyUpP1 = -1f;
+            keyUpP2 = -1f;
         }
 
         //Turn setup
