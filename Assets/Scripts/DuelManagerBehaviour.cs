@@ -115,7 +115,6 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (Input.GetKeyDown(KeyCode.A))
         {
             keyDownP1 = 0f;
-            //keyUpP1 = -1f;
         }
         if (Input.GetKeyUp(KeyCode.A))
         {
@@ -128,6 +127,20 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyDownP1 = -1f;
         }
         //Player 2
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            keyDownP2 = 0f;
+        }
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            if ((keyDownP2 >= 0f) && (keyDownP2 < holdThreshold))
+            {
+                if ((keyUpP2 > 0f) && (keyUpP2 < mashThreshold)) PlayerMash(player2);
+                else PlayerTap(player2);
+            }
+            keyUpP2 = 0f;
+            keyDownP2 = -1f;
+        }
 
         //Debug.Log("Walk time so far: " + walkTimer.ToString());
     }
@@ -155,6 +168,11 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 
     public void PlayerMash(PlayerBehaviour _player)
     {
+        _player.gumption += Random.Range(-2f, 5f);
+        _player.manners += Random.Range(-2f, 5f);
+        _player.breeding += Random.Range(-2f, 5f);
+        _player.bottle += Random.Range(-2f, 5f);
+
         Debug.Log("Mashing!");
     }
 
