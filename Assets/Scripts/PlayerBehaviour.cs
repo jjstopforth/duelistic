@@ -22,7 +22,7 @@ public class PlayerBehaviour : MonoBehaviour {
 			//Debug.Log ("The Main camera half-width is: " + Camera.main.orthographicSize);
 			if (Camera.main.orthographic) 
 			{
-				_endPosition = Camera.main.orthographicSize;
+				_endPosition = Camera.main.GetComponentInParent<ZoomController>().MaxZoomSize;
 				_endPosition -= (_endPosition / 8f);
 
 				if (_startPosition < 0)
@@ -58,6 +58,7 @@ public class PlayerBehaviour : MonoBehaviour {
 				_playerAnimator.SetTrigger("Turn");
 				break;
 			case DuelStates.shoot:
+                this.GetComponentInParent<SpriteRenderer>().flipX = !this.GetComponentInParent<SpriteRenderer>().flipX;
 				_playerAnimator.ResetTrigger("Turn");
 				_playerAnimator.SetTrigger("Shoot");
 				break;
@@ -79,7 +80,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
 			Vector3 newPosition = new Vector3 (newX, this.transform.position.y, this.transform.position.z);
 			this.transform.position = newPosition;
-			
 		} 
 
 	}
