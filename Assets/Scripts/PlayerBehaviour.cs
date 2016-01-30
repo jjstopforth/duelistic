@@ -84,7 +84,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	}
 
     /// <summary>
-    /// Resets stats to 0
+    /// Resets this entire object back to start state...
     /// </summary>
     public void ResetStats()
     {
@@ -93,10 +93,17 @@ public class PlayerBehaviour : MonoBehaviour {
         breeding = 0f;
         bottle = 0f;
 
+        //Undo whatever flip happened...
         this.GetComponentInParent<SpriteRenderer>().flipX = (transform.position.x < 0f);
+        _hasFlipped = false;
+
+        //Reset our positions...
         Vector3 startPos = transform.position;
         startPos.x = _startPosition;
         transform.position = startPos;
+
+        //Reset animations
+        SetAnimationBool("isReady", true);
     }
 
     /// <summary>
@@ -133,9 +140,9 @@ public class PlayerBehaviour : MonoBehaviour {
 
 	}
 
-    public void SetAnimationBool(string _boolName, bool _value, bool _resetOtherBools = true)
+    public void SetAnimationBool(string _boolName, bool _value, bool _resetOtherBools = false)
     {
-        if (_resetOtherBools) ResetAnimationBools();
+        if (_resetOtherBools) ResetAnimationBools(); //Probably don't do this... erm...
         _playerAnimator.SetBool(_boolName, _value);
     }
 }

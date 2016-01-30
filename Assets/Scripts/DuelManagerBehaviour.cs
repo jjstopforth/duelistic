@@ -350,12 +350,18 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             w.SetHoldFactors(0, 3, 3f);
             walkEventsP2.Add(w);
 
-            w = new WalkEvent(0f, 1f, WalkEventTypes.owlSalute);
-            w.SetMashFactors(Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f));
+            float windStart = Random.Range(0.0f, 0.7f);
+            float windDuration = Random.Range(0.3f, Mathf.Min(1f - windStart, 0.5f));
+            w = new WindEvent(windStart, windDuration);
             walkEventsP1.Add(w);
+            w = new WindEvent(windStart, windDuration);
+            walkEventsP2.Add(w);
 
-            w = new WalkEvent(0f, 1f, WalkEventTypes.owlSalute);
-            w.SetMashFactors(Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f), Random.Range(0f, 5f));
+            float rabbitStart = Random.Range(0.0f, 0.7f);
+            float rabbitDuration = Random.Range(0.3f, Mathf.Min(1f - windStart, 0.5f));
+            w = new RabbitEvent(rabbitStart, rabbitDuration);
+            walkEventsP1.Add(w);
+            w = new RabbitEvent(rabbitStart, rabbitDuration);
             walkEventsP2.Add(w);
 
             walkEventsP1.Sort();

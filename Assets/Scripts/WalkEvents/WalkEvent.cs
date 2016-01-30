@@ -8,6 +8,8 @@ public enum WalkEventTypes
 {
     footStep,
     hatTwirl, //Temporary events yo...
+    wind,
+    rabbit,
     owlSalute,
     mustacheFridge,
     invertedJosephine
