@@ -66,11 +66,15 @@ public class PlayerBehaviour : MonoBehaviour {
 				break;
 		
 		}
-
-
 	}
 
-
+    public void ResetStats()
+    {
+        gumption = 0f;
+        manners = 0f;
+        breeding = 0f;
+        bottle = 0f;
+    }
 
 	private void UpdatePosition ()
 	{
