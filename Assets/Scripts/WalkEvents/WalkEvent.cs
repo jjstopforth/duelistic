@@ -38,6 +38,21 @@ public class WalkEvent : IComparable
         get { return duration; }
     }
 
+    public virtual void StartEvent(PlayerBehaviour _currentPlayer)
+    {
+        //Event starts!
+    }
+
+    public virtual void UpdateEvent(PlayerBehaviour _currentPlayer)
+    {
+        //Call this every frame the event is active...
+    }
+
+    public virtual void EndEvent(PlayerBehaviour _currentPlayer)
+    {
+        //End the event (clean shit up yo)
+    }
+
     public WalkEvent(float _start, float _duration, WalkEventTypes _event, float _gumptionDelta = 0f, float _mannersDelta = 0f, float _breedingDelta = 0f, float _bottleDelta = 0f)
     {
         start = _start;

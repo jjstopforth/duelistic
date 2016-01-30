@@ -452,6 +452,7 @@ MonoBehaviour:
   turnVariance: 0.5
   holdThreshold: 0.15
   mashThreshold: 0.2
+  footstepAnim: {fileID: 182272, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
 --- !u!4 &1775240039
 Transform:
   m_ObjectHideFlags: 0
