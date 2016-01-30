@@ -7,6 +7,9 @@ public class PlayerBehaviour : MonoBehaviour {
 	float _startPosition;
 	float _endPosition;
 
+	Animator _playerAnimator;
+	string[] _animationBools = {"isReady","isWalking", "isTurning", "isShooting", "isWinner"};
+
     //The pseudo factors:
     public float gumption, manners, breeding, bottle = 0f;
     public static float maxFactorValue = 100;
@@ -14,6 +17,8 @@ public class PlayerBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		_playerAnimator = this.GetComponentInParent<Animator>();
+
 		_startPosition = this.transform.position.x;
 		//Debug.Log ("The start position is: " + _startPosition);
 
@@ -36,9 +41,14 @@ public class PlayerBehaviour : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update()
-    {
-    	Animator _playerAnimator = this.GetComponentInParent<Animator>();
+	void Update ()
+	{
+		if (_playerAnimator == null) 
+		{
+
+			return;
+			
+		}
 
 		switch (DuelManagerBehaviour.Instance.State)
 		{
@@ -49,18 +59,18 @@ public class PlayerBehaviour : MonoBehaviour {
 			case DuelStates.ready:
 				break;
 			case DuelStates.walk:
-				_playerAnimator.ResetTrigger("Shoot"); // Might be able to remove later on or reset all after win/loss/tie.
-				_playerAnimator.SetTrigger("Walk");
+				ResetAnimationBools();
+				_playerAnimator.SetBool("isWalking", true);
 				UpdatePosition();
 				break;
 			case DuelStates.turn:
-				_playerAnimator.ResetTrigger("Walk");
-				_playerAnimator.SetTrigger("Turn");
+				ResetAnimationBools();
+				_playerAnimator.SetBool("isTurning",true);
 				break;
 			case DuelStates.shoot:
+				ResetAnimationBools();
+				_playerAnimator.SetBool("isShooting",true);
                 this.GetComponentInParent<SpriteRenderer>().flipX = !this.GetComponentInParent<SpriteRenderer>().flipX;
-				_playerAnimator.ResetTrigger("Turn");
-				_playerAnimator.SetTrigger("Shoot");
 				break;
 			default:
 				break;
@@ -104,6 +114,17 @@ public class PlayerBehaviour : MonoBehaviour {
 			Vector3 newPosition = new Vector3 (newX, this.transform.position.y, this.transform.position.z);
 			this.transform.position = newPosition;
 		} 
+
+	}
+
+	void ResetAnimationBools ()
+	{
+		
+		foreach (string animatorBoolean in _animationBools)
+		{
+			_playerAnimator.SetBool(animatorBoolean, false);	
+
+		}
 
 	}
 

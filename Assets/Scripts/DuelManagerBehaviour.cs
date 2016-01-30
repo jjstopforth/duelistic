@@ -175,7 +175,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyDownP2 = -1f;
         }
 
-        //Debug.Log("Walk time so far: " + walkTimer.ToString());
+        Debug.Log("Walk time so far: " + walkTimer.ToString());
     }
 
     public void PlayerHolding(PlayerBehaviour _player)
