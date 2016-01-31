@@ -57,8 +57,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     //Prompts...
     [Header("Prompts...")]
     public GameObject pressALprompt = null;
-
-
+    public GameObject pressSpacePrompt = null;
 
 
     public DuelStates State
@@ -116,6 +115,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             case DuelStates.turn: TurnUpdate(); break;
         }
 	}
+
+    protected void SpacePrompt(bool _show)
+    {
+        if (pressSpacePrompt != null)
+        {
+            pressSpacePrompt.SetActive(_show);
+        }
+    }
 
     protected void ReadyUpdate()
     {
@@ -374,6 +381,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
                 ZoomController zoomController = Camera.main.GetComponent<ZoomController>();
                 zoomController.ResetCamera();
             }
+
+            SpacePrompt(true);
         }
 
         //Pistol Select setup
@@ -385,6 +394,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 
             pistolSelector.gameObject.SetActive(true);
             pistolSelector.Reset();
+
+            SpacePrompt(false);
         }
 
         //Ready setup
@@ -495,6 +506,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (newState == DuelStates.tie)
         {
             Debug.Log("Tie! Honour not satisfied!");
+            //SpacePrompt(true);
         }
 
         //Player 1 win setup
@@ -503,6 +515,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             player1.SetAnimationBool("isWinner", true);
             player2.SetAnimationBool("isWinner", false);
             Debug.Log("Player 1 is satisfied!");
+            //SpacePrompt(true);
         }
 
         //Player 2 win setup
@@ -511,6 +524,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             player2.SetAnimationBool("isWinner", true);
             player1.SetAnimationBool("isWinner", false);
             Debug.Log("Player 2 is satisfied!");
+            //SpacePrompt(true);
         }
 
         //Switch!

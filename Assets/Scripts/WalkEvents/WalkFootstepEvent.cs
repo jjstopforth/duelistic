@@ -17,7 +17,7 @@ public class WalkFootstepEvent : WalkEvent
         //Do a footstep thing? Like, play a sound? Why isn't this using Unity's drag and drop?
         if (DuelManagerBehaviour.Instance.footstepAnim != null)
         {
-            GameObject step = (GameObject)GameObject.Instantiate(DuelManagerBehaviour.Instance.footstepAnim, _currentPlayer.transform.position, Quaternion.identity);
+            GameObject step = (GameObject)GameObject.Instantiate(DuelManagerBehaviour.Instance.footstepAnim, _currentPlayer.transform.position + new Vector3(0f, 01f, 2f), Quaternion.identity);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class HandController : MonoBehaviour {
 
@@ -10,6 +11,9 @@ public class HandController : MonoBehaviour {
 
 	public AttractorTarget GunTarget1;
 	public AttractorTarget GunTarget2;
+
+    public Image hand1;
+    public Image hand2;
 
 	// Use this for initialization
 	void Start () 
@@ -46,8 +50,13 @@ public class HandController : MonoBehaviour {
 				Player2DecisionConfidence += dt / 2f;
 			}
 		}
-	
-	}
+
+        float c = Mathf.Min(Player1DecisionConfidence, 1f);
+        hand1.color = new Color(c, c, c, 141f / 255f);
+        c = Mathf.Min(Player2DecisionConfidence, 1f);
+        hand2.color = new Color(c, c, c, 141f / 255f);
+
+    }
 
 	public void ResetPlayerHand (string playerName)
 	{	
