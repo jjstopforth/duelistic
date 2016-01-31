@@ -7,13 +7,13 @@ public class TransistionController : MonoBehaviour {
 	void Start () {
 	
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
 
 		if (Input.anyKey) {
-			//SceneManager.LoadScene("Main");
+			UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
 			Debug.Log("Load next scene!");
 		
 		}
