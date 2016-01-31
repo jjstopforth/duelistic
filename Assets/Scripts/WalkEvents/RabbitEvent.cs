@@ -28,7 +28,6 @@ public class RabbitEvent : WalkEvent
         if (rabbitAnim == null)
         {
             rabbitAnim = GameObject.Instantiate<GameObject>(DuelManagerBehaviour.Instance.rabbitAnim);
-            rabbitAnim.transform.position = new Vector3(0f, Random.Range(-2f, -3f), 0f);
         }
     }
 

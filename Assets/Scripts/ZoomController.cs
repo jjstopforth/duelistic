@@ -18,16 +18,20 @@ public class ZoomController : MonoBehaviour {
 
 	float _timeAccumulator;
 	float _deltaTime;
+    protected Vector3 _pos;
+    protected Camera _camera;
 
 	// Use this for initialization
 	void Start ()
 	{
-		if (this.GetComponentInParent<Camera>().orthographic) 
+        _camera = GetComponentInParent<Camera>();
+
+        if (_camera.orthographic) 
 		{
-			MaxZoomSize = this.GetComponentInParent<Camera>().orthographicSize;
+			MaxZoomSize = _camera.orthographicSize;
 		}
 
-		this.GetComponentInParent<Camera>().orthographicSize = MinZoomSize;
+        _camera.orthographicSize = MinZoomSize;
 
 		_lerpEnd = MaxZoomSize;
 	}
@@ -58,11 +62,13 @@ public class ZoomController : MonoBehaviour {
 
 		}
 
-		if (this.GetComponentInParent<Camera> ().orthographic) {
-			this.GetComponentInParent<Camera> ().orthographicSize = ((newOrthoSize > MinZoomSize) ? newOrthoSize : MinZoomSize);
+		if (_camera.orthographic) {
+            _camera.orthographicSize = ((newOrthoSize > MinZoomSize) ? newOrthoSize : MinZoomSize);
 
-
-		}
+            _pos = transform.position;
+            _pos.y = (_camera.orthographicSize - MinZoomSize);
+            transform.position = _pos;
+        }
 	}
 
     public void ResetCamera()
