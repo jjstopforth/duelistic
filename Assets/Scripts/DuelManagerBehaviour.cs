@@ -95,6 +95,11 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 	// Update is called once per frame
 	void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         //Switch states "next frame"
         if (nextState != DuelStates.none)
         {
