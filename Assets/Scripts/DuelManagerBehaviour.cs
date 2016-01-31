@@ -98,6 +98,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         switch (currentState)
         {
             case DuelStates.ready: ReadyUpdate(); break;
+            case DuelStates.pistolSelection: PistolSelectionUpdate(); break;
             case DuelStates.walk: WalkUpdate(); break;
             case DuelStates.turn: TurnUpdate(); break;
         }
@@ -133,6 +134,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             ChangeStateNextFrame(DuelStates.walk);
         }
+    }
+
+    protected void PistolSelectionUpdate()
+    {
+        //Do pistol input stuff here, woo!
+
+        //At some point:
+        ChangeStateNextFrame(DuelStates.ready);
     }
 
     protected void WalkUpdate()
@@ -296,7 +305,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     {
         switch (currentState)
         {
-            case DuelStates.start: ChangeStateTo(DuelStates.ready); break;
+            case DuelStates.start: ChangeStateTo(DuelStates.pistolSelection); break;
             //case DuelStates.ready: ChangeStateTo(DuelStates.walk); break;
             case DuelStates.tie:
             case DuelStates.p1win:
@@ -328,6 +337,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
                 ZoomController zoomController = Camera.main.GetComponent<ZoomController>();
                 zoomController.ResetCamera();
             }
+        }
+
+        //Pistol Select setup
+        if (newState == DuelStates.pistolSelection)
+        {
+            Debug.Log("Pistol select start");
+
+            //Enable the pistol canvas here!
         }
 
         //Ready setup
