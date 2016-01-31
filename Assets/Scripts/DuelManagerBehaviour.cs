@@ -33,6 +33,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     [SerializeField]
     protected float turnVariance = 0.5f;
 
+	//Pistol Selection vars
+    public HandController PistolSelector;
+
+
     //Input variables
     [Header("Input variables")]
     [SerializeField]
@@ -48,6 +52,9 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     public GameObject rabbitAnim = null;
     public GameObject hatAnim = null;
     public GameObject handAnim = null;
+
+
+
 
     public DuelStates State
     {
@@ -136,12 +143,30 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         }
     }
 
-    protected void PistolSelectionUpdate()
-    {
-        //Do pistol input stuff here, woo!
+    protected void PistolSelectionUpdate ()
+	{
+		//Do pistol input stuff here, woo!
 
-        //At some point:
-        ChangeStateNextFrame(DuelStates.ready);
+		// Remove this later
+
+
+		if (Input.GetKeyDown (KeyCode.A)) {
+			PistolSelector.SetHandTarget ("player1");
+		} else if (Input.GetKeyUp (KeyCode.A)) {
+			PistolSelector.ResetPlayerHand("player1");
+			}
+
+		if (Input.GetKeyDown (KeyCode.L)) {
+			PistolSelector.SetHandTarget("player2");
+		}else if (Input.GetKeyUp (KeyCode.L)) {
+			PistolSelector.ResetPlayerHand("player2");
+		}
+
+		//At some point:
+		if ((PistolSelector.Player1DecisionConfidence >= 1f) && (PistolSelector.Player2DecisionConfidence >= 1f)) 
+		{
+			ChangeStateNextFrame (DuelStates.ready);
+		}
     }
 
     protected void WalkUpdate()
@@ -343,6 +368,11 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (newState == DuelStates.pistolSelection)
         {
             Debug.Log("Pistol select start");
+
+            ChangeStateTo(DuelStates.ready);
+
+			//PistolSelector.Enable(true);
+
 
             //Enable the pistol canvas here!
         }
