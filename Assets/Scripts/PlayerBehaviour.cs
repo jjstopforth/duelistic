@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerBehaviour : MonoBehaviour {
 
 	//For different screen sizes
-	float _startPosition;
+	public float _startPosition;
 	float _endPosition;
 
 	Animator _playerAnimator;
@@ -21,8 +21,7 @@ public class PlayerBehaviour : MonoBehaviour {
 	{
 		_playerAnimator = this.GetComponentInParent<Animator>();
 
-		_startPosition = this.transform.position.x;
-		//Debug.Log ("The start position is: " + _startPosition);
+		//_startPosition = this.transform.position.x;
 
 		if (Camera.main != null) 
 		{
@@ -103,7 +102,10 @@ public class PlayerBehaviour : MonoBehaviour {
         transform.position = startPos;
 
         //Reset animations
-        SetAnimationBool("isReady", true);
+        if (_playerAnimator != null)
+        {
+            SetAnimationBool("isReady", true);
+        }
     }
 
     /// <summary>
