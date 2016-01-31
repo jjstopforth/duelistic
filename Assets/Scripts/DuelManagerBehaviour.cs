@@ -21,6 +21,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     protected DuelStates currentState;
     protected float walkTimer, prevWalkTimer, turnTimer;
     protected DuelStates nextState;
+    protected GameObject alPrompt;
 
     protected List<WalkEvent> walkEventsP1, walkEventsP2;
 
@@ -53,6 +54,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     public GameObject hatAnim = null;
     public GameObject handAnim = null;
 
+    //Prompts...
+    [Header("Prompts...")]
+    public GameObject pressALprompt = null;
+
 
 
 
@@ -77,11 +82,12 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 	// Use this for initialization
 	public void Start()
     {
+        DontDestroyOnLoad(this.gameObject);
+        walkTimer = 0f;
+
         currentState = DuelStates.none;
         ChangeStateTo(DuelStates.start);
         nextState = DuelStates.none;
-        DontDestroyOnLoad(this.gameObject);
-        walkTimer = 0f;
 	}
 	
 	// Update is called once per frame
@@ -386,6 +392,11 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("Are you ready to duel?");
 
+            if (pressALprompt != null)
+            {
+                pressALprompt.SetActive(true);
+            }
+
             //Populate the walk events...
             for (int i = 0; i < 10; i++)
             {
@@ -446,6 +457,11 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyUpP2 = -1f;
 
             Debug.Log("Duelling! (banjos)");
+
+            if (pressALprompt != null)
+            {
+                pressALprompt.SetActive(false);
+            }
         }
 
         //Turn setup
