@@ -969,6 +969,10 @@ Prefab:
       propertyPath: PlayerBehaviour
       value: 
       objectReference: {fileID: 1886488717}
+    - target: {fileID: 11463912, guid: 8b7714360341c69458c148d5ee84c782, type: 2}
+      propertyPath: m_UiScaleMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8b7714360341c69458c148d5ee84c782, type: 2}
   m_IsPrefabParent: 0
@@ -1252,7 +1256,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!224 &1796272307 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 22470524, guid: 8b7714360341c69458c148d5ee84c782,

@@ -42,13 +42,17 @@ public class HandController : MonoBehaviour {
 
 		if (Player1Attractor.HasTarget) {
 			Player1DecisionConfidence += dt / 2f;
+            Rigidbody2D r = hand1.GetComponent<Rigidbody2D>();
+            r.velocity = r.velocity * 0.75f;
 		}
 
 
 		if (Player2Attractor != null) { //Remove later
 			if (Player2Attractor.HasTarget) {
 				Player2DecisionConfidence += dt / 2f;
-			}
+                Rigidbody2D r = hand2.GetComponent<Rigidbody2D>();
+                r.velocity = r.velocity * 0.75f;
+            }
 		}
 
         float c = Mathf.Min(Player1DecisionConfidence, 1f);

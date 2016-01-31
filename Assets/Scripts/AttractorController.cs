@@ -64,9 +64,9 @@ public class AttractorController : MonoBehaviour {
 
 			// The hand has to snap to the target
 			this.GetComponent<SpringJoint2D>().frequency = 1f;
-		} 
+        }
 
-	}
+    }
 
 	void SetPosition (Vector3 targetPosition)
 	{
