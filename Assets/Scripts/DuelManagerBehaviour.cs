@@ -53,11 +53,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     public GameObject rabbitAnim = null;
     public GameObject hatAnim = null;
     public GameObject handAnim = null;
+    public GameObject bangAnim = null;
 
     //Prompts...
     [Header("Prompts...")]
     public GameObject pressALprompt = null;
     public GameObject pressSpacePrompt = null;
+
+    public SoundManager soundManager;
 
 
     public DuelStates State
@@ -369,6 +372,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("START");
 
+            soundManager.PlayMusic();
+
             walkTimer = 0f;
 
             walkEventsP1.Clear();
@@ -412,8 +417,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             for (int i = 0; i < 10; i++)
             {
                 //Just with footsteps for now
-                walkEventsP1.Add(new WalkFootstepEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f));
-                walkEventsP2.Add(new WalkFootstepEvent(0.1f * i + Random.Range(-0.01f, 0.01f), 0.05f));
+                walkEventsP1.Add(new WalkFootstepEvent(0.1f * i, 0.05f));
+                walkEventsP2.Add(new WalkFootstepEvent(0.1f * i, 0.05f));
             }
 
             WalkEvent w;
@@ -461,6 +466,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             walkTimer = 0f;
 
+            soundManager.PlayWalk();
+
             //Reset keyboard inputs:
             keyDownP1 = -1f;
             keyDownP2 = -1f;
@@ -507,11 +514,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("Tie! Honour not satisfied!");
             //SpacePrompt(true);
+            GameObject.Instantiate(bangAnim, player1.transform.position, Quaternion.identity);
+            GameObject.Instantiate(bangAnim, player2.transform.position, Quaternion.identity);
         }
 
         //Player 1 win setup
         if (newState == DuelStates.p1win)
         {
+            GameObject.Instantiate(bangAnim, player1.transform.position, Quaternion.identity);
             player1.SetAnimationBool("isWinner", true);
             player2.SetAnimationBool("isWinner", false);
             Debug.Log("Player 1 is satisfied!");
@@ -521,6 +531,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         //Player 2 win setup
         if (newState == DuelStates.p2win)
         {
+            GameObject.Instantiate(bangAnim, player2.transform.position, Quaternion.identity);
             player2.SetAnimationBool("isWinner", true);
             player1.SetAnimationBool("isWinner", false);
             Debug.Log("Player 2 is satisfied!");

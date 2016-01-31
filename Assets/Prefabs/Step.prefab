@@ -93,7 +93,7 @@ MonoBehaviour:
   _originalScale: {x: 0, y: 0, z: 0}
   DeltaPos: {x: 0, y: 0.1, z: 0}
   DeltaScale: {x: 0.5, y: 0.5, z: 1}
-  FadeColor: {r: 1, g: 0, b: 0, a: 0}
+  FadeColor: {r: 0, g: 0, b: 0, a: 0}
   ColorEasingType: 35
   PosEasingType: 35
   ScaleEasingType: 35
@@ -103,7 +103,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: FadeColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: FadeColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: FadeColor.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 122644}
