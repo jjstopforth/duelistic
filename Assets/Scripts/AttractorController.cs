@@ -12,11 +12,8 @@ public class AttractorController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		_roaming = true;
-		_hasTarget = false;
+		Reset();
 
-		_targetPosition = new Vector2(Random.Range(-307,332),Random.Range(-100,100));
-	
 	}
 	
 	// Update is called once per frame
@@ -56,14 +53,6 @@ public class AttractorController : MonoBehaviour {
 
 	}
 
-	public void ResetTarget ()
-	{
-		_hasTarget = false;
-		_roaming = true;
-		this.GetComponent<SpringJoint2D>().frequency = 0.005f;
-
-	}
-
 	public void SetTarget (Vector3 position)
 	{	
 
@@ -94,4 +83,15 @@ public class AttractorController : MonoBehaviour {
 	{
 		get { return _targetPosition; }
 	}
+
+	public void Reset ()
+	{
+		_roaming = true;
+		_hasTarget = false;
+
+		_targetPosition = new Vector3(Random.Range(-307,332),Random.Range(-100,100));
+
+		
+	}
+
 }

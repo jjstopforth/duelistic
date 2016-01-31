@@ -21,6 +21,12 @@ public class HandController : MonoBehaviour {
     {
         Player1DecisionConfidence = 0f;
         Player2DecisionConfidence = 0f;
+
+        //GunTarget1.Reset();
+        //GunTarget2.Reset();
+
+        Player1Attractor.Reset();
+		Player2Attractor.Reset();
     }
 	
 	// Update is called once per frame
@@ -47,12 +53,12 @@ public class HandController : MonoBehaviour {
 	{	
 
 		if (playerName == "player1") {
-			Player1Attractor.ResetTarget();
+			Player1Attractor.Reset();
 			Player1DecisionConfidence = 0f;
 		} 
 		else if (playerName == "player2") 
 		{
-			Player2Attractor.ResetTarget();
+			Player2Attractor.Reset();
 			Player2DecisionConfidence = 0f;
 		} 
 		else 
