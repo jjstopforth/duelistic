@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &158014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 443882}
+  - 114: {fileID: 11435824}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &443882
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11435824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0b3cdfeab57ce34fa3e657b9d46acd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footSteps:
+  - {fileID: 8300000, guid: 62908284ed3945e4cbb1228764da9587, type: 3}
+  - {fileID: 8300000, guid: 9c64d6ce88de90642a05df2fc5c53d20, type: 3}
+  - {fileID: 8300000, guid: 83f833ac40c3c5b4b96bf0e0fa16819e, type: 3}
+  - {fileID: 8300000, guid: fb70ac2a064d5a4498843efdb92cca88, type: 3}
+  - {fileID: 8300000, guid: c2c1190157b9eff409960a7e037eceb3, type: 3}
+  - {fileID: 8300000, guid: 9f03c599ba6c3e746be2177491b02476, type: 3}
+  TempSoundPrefab: {fileID: 138862, guid: cc67cd1897a883b4fb36af952db9f250, type: 2}
+  walk: {fileID: 8300000, guid: 50fd64221f89dbe45b113e89c83c8cf1, type: 3}
+  music: {fileID: 8300000, guid: d289f9eaab0c0184db5854264cea3238, type: 3}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: TempSoundPrefab
+      value: 
+      objectReference: {fileID: 138862, guid: cc67cd1897a883b4fb36af952db9f250, type: 2}
+    - target: {fileID: 0}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 8300000, guid: d289f9eaab0c0184db5854264cea3238, type: 3}
+    - target: {fileID: 0}
+      propertyPath: walk
+      value: 
+      objectReference: {fileID: 8300000, guid: 50fd64221f89dbe45b113e89c83c8cf1, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 62908284ed3945e4cbb1228764da9587, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c64d6ce88de90642a05df2fc5c53d20, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 83f833ac40c3c5b4b96bf0e0fa16819e, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: fb70ac2a064d5a4498843efdb92cca88, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: c2c1190157b9eff409960a7e037eceb3, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footSteps.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9f03c599ba6c3e746be2177491b02476, type: 3}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 158014}
+  m_IsPrefabParent: 1

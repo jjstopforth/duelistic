@@ -54,6 +54,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     public GameObject handAnim = null;
 
 
+    public SoundManager SoundManager = null;
 
 
     public DuelStates State
@@ -356,6 +357,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("START");
 
+            SoundManager.PlayMusic();
             walkTimer = 0f;
 
             walkEventsP1.Clear();
@@ -438,6 +440,8 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         if (newState == DuelStates.walk)
         {
             walkTimer = 0f;
+            SoundManager.PlayWalk();
+
 
             //Reset keyboard inputs:
             keyDownP1 = -1f;
