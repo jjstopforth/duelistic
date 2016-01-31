@@ -519,14 +519,14 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("Tie! Honour not satisfied!");
             //SpacePrompt(true);
-            GameObject.Instantiate(bangAnim, player1.transform.position, Quaternion.identity);
-            GameObject.Instantiate(bangAnim, player2.transform.position, Quaternion.identity);
+            GameObject.Instantiate(bangAnim, player1.transform.position + new Vector3(0f, 0f ,-9f), Quaternion.identity);
+            GameObject.Instantiate(bangAnim, player2.transform.position + new Vector3(0f, 0f, -9f), Quaternion.identity);
         }
 
         //Player 1 win setup
         if (newState == DuelStates.p1win)
         {
-            GameObject.Instantiate(bangAnim, player1.transform.position, Quaternion.identity);
+            GameObject.Instantiate(bangAnim, player1.transform.position + new Vector3(0f, 0f, -9f), Quaternion.identity);
             player1.SetAnimationBool("isWinner", true);
             player2.SetAnimationBool("isWinner", false);
             Debug.Log("Player 1 is satisfied!");
@@ -536,7 +536,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         //Player 2 win setup
         if (newState == DuelStates.p2win)
         {
-            GameObject.Instantiate(bangAnim, player2.transform.position, Quaternion.identity);
+            GameObject.Instantiate(bangAnim, player2.transform.position + new Vector3(0f, 0f, -9f), Quaternion.identity);
             player2.SetAnimationBool("isWinner", true);
             player1.SetAnimationBool("isWinner", false);
             Debug.Log("Player 2 is satisfied!");
