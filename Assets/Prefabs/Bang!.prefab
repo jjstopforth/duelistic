@@ -40,7 +40,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: f115b863bf48d344f8302e4525df6ceb, type: 3}
+  - {fileID: 2100000, guid: 38ab026bafd034679924bf376a526ae9, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -70,13 +70,13 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 120
+  m_FontSize: 72
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: f115b863bf48d344f8302e4525df6ceb, type: 3}
+  m_Font: {fileID: 12800000, guid: 38ab026bafd034679924bf376a526ae9, type: 3}
   m_Color:
     serializedVersion: 2
-    rgba: 4278245631
+    rgba: 4283946476
 --- !u!114 &11469526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,7 +103,20 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 38ab026bafd034679924bf376a526ae9,
+        type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Color.rgba
+      value: 4283946476
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_FontSize
+      value: 72
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 182272}
