@@ -14,10 +14,14 @@ public class HandController : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		Player1DecisionConfidence = 0f;
-		Player2DecisionConfidence = 0f;
-	
+        Reset();
 	}
+
+    public void Reset()
+    {
+        Player1DecisionConfidence = 0f;
+        Player2DecisionConfidence = 0f;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -38,15 +42,6 @@ public class HandController : MonoBehaviour {
 		}
 	
 	}
-
-	public void Enable (bool _enable)
-	{
-
-		this.enabled = _enable;
-
-	}
-
-
 
 	public void ResetPlayerHand (string playerName)
 	{	

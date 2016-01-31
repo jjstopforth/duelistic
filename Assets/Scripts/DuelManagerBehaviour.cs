@@ -34,7 +34,7 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
     protected float turnVariance = 0.5f;
 
 	//Pistol Selection vars
-    public HandController PistolSelector;
+    public HandController pistolSelector;
 
 
     //Input variables
@@ -137,35 +137,41 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
             keyUpP2 = -1f;
         }
 
-        if (((keyUpP1 == 0f) && (keyUpP2 < mashThreshold)) || ((keyUpP2 == 0f) && (keyUpP1 < mashThreshold)))
+        if (keyUpP1 + keyUpP2 < 0f) //Prevent auto-progression...
         {
-            ChangeStateNextFrame(DuelStates.walk);
+            if (((keyUpP1 == 0f) && (keyUpP2 < mashThreshold)) || ((keyUpP2 == 0f) && (keyUpP1 < mashThreshold)))
+            {
+                ChangeStateNextFrame(DuelStates.walk);
+            }
         }
     }
 
     protected void PistolSelectionUpdate ()
 	{
 		//Do pistol input stuff here, woo!
+		if (Input.GetKeyDown (KeyCode.A))
+        {
+			pistolSelector.SetHandTarget ("player1");
+		}
+        else if (Input.GetKeyUp (KeyCode.A))
+        {
+			pistolSelector.ResetPlayerHand("player1");
+		}
 
-		// Remove this later
-
-
-		if (Input.GetKeyDown (KeyCode.A)) {
-			PistolSelector.SetHandTarget ("player1");
-		} else if (Input.GetKeyUp (KeyCode.A)) {
-			PistolSelector.ResetPlayerHand("player1");
-			}
-
-		if (Input.GetKeyDown (KeyCode.L)) {
-			PistolSelector.SetHandTarget("player2");
-		}else if (Input.GetKeyUp (KeyCode.L)) {
-			PistolSelector.ResetPlayerHand("player2");
+		if (Input.GetKeyDown (KeyCode.L))
+        {
+			pistolSelector.SetHandTarget("player2");
+		}
+        else if (Input.GetKeyUp (KeyCode.L))
+        {
+			pistolSelector.ResetPlayerHand("player2");
 		}
 
 		//At some point:
-		if ((PistolSelector.Player1DecisionConfidence >= 1f) && (PistolSelector.Player2DecisionConfidence >= 1f)) 
+		if ((pistolSelector.Player1DecisionConfidence >= 1f) && (pistolSelector.Player2DecisionConfidence >= 1f)) 
 		{
-			ChangeStateNextFrame (DuelStates.ready);
+			ChangeStateNextFrame(DuelStates.ready);
+            pistolSelector.gameObject.SetActive(false);
 		}
     }
 
@@ -369,12 +375,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
         {
             Debug.Log("Pistol select start");
 
-            ChangeStateTo(DuelStates.ready);
+            //ChangeStateTo(DuelStates.ready);
 
-			//PistolSelector.Enable(true);
-
-
-            //Enable the pistol canvas here!
+            pistolSelector.gameObject.SetActive(true);
+            pistolSelector.Reset();
         }
 
         //Ready setup
@@ -424,6 +428,10 @@ public class DuelManagerBehaviour : SingletonBehaviour<DuelManagerBehaviour>
 
             walkEventsP1.Sort();
             walkEventsP2.Sort();
+
+            //Prevent key auto-progression: God this is hacky...
+            keyUpP1 = 100f;
+            keyUpP2 = 100f;
         }
 
         //Walk setup
