@@ -455,8 +455,8 @@ MonoBehaviour:
   footstepAnim: {fileID: 182272, guid: 4cd9ebcbdde3521489f909974be85809, type: 2}
   windAnim: {fileID: 132530, guid: 507fefaca11c8e54e962fb0175ceadca, type: 2}
   rabbitAnim: {fileID: 107154, guid: f08f00d9460522f4db56ebf5f838730e, type: 2}
-  hatAnim: {fileID: 0}
-  handAnim: {fileID: 0}
+  hatAnim: {fileID: 182592, guid: e644ac9e0e3456e4faaec353e5f8e500, type: 2}
+  handAnim: {fileID: 188728, guid: 5842d1a15028f0347847824be4b60171, type: 2}
 --- !u!4 &1775240039
 Transform:
   m_ObjectHideFlags: 0
